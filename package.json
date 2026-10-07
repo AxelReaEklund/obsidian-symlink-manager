@@ -1,0 +1,37 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "obsidian-symlink-manager",
+  "title": "Obsidian Symlink Manager",
+  "description": "Effortlessly manage, inspect, and sync symlinked Obsidian plugins, CSS snippets, and themes across multiple vaults.\n\n⚬ Inspect & Modify: View existing symlink targets, update paths, and create or remove links on the fly.\n⚬ Vault Bootstrapping: Generate new vaults with a guided setup to choose exactly which components to symlink.\n⚬ Global Origin Vault: Define a primary source vault where your shared, \"source-of-truth\" configurations live.\n⚬ Broken Link Detection: Automatically highlight and repair \"dead\" symlinks when source files are deleted or moved.\n⚬ Sync Profiles / Presets: Allow one-click symlink sets (e.g., a minimal \"Work Vault\" profile vs. a fully loaded \"Personal\" profile).\n⚬ Hot-Reload / Restart Reminder: A built-in prompt or command to reload Obsidian without saving/reopening after symlink changes.",
+  "icon": "extension-icon.png",
+  "author": "axel_eklund",
+  "platforms": [
+    "macOS"
+  ],
+  "categories": [
+    "Productivity"
+  ],
+  "license": "MIT",
+  "commands": [],
+  "tools": [],
+  "dependencies": {
+    "@raycast/api": "^1.104.20",
+    "@raycast/utils": "^2.2.7"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.2.0",
+    "@types/node": "22.19.17",
+    "@types/react": "19.0.10",
+    "eslint": "^10.5.0",
+    "prettier": "^3.8.5",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "build": "ray build",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}

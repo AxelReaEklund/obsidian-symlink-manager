@@ -8,19 +8,10 @@ Key documents in the `specifications-vault` folder include:
 
 ---
 
-## Core Capabilities to Implement
-1. **Symlink Inspection & Management:**
-   - Detect and list all plugins, CSS snippets, and themes across registered vaults.
-   - Differentiate between native files, valid symlinks, and broken symlinks.
-   - Provide actions to create, repoint, and safely unlink items.
-2. **Global / Origin Vault Configuration:**
-   - Allow setting a single "source of truth" vault where canonical configurations reside.
-   - Sync configurations from origin to target vaults.
-3. **Vault Bootstrapping & Creation:**
-   - Step-by-step Raycast Form to scaffold a new vault and selectively choose which origin components to symlink.
-4. **Safety & Validation:**
-   - Prevent circular symlinks or linking inside non-Obsidian directories.
-   - Offer dry-run checks and graceful handling of missing origin targets.
+## Project Goals
+This project is a Raycast extension designed to help manage multiple Obsidian vaults without duplicating configuration files. The core idea is to establish a single "source of truth" origin vault, and then intelligently symlink plugins, themes, and CSS snippets from that origin to any other target vaults you use. 
+
+Instead of manually copying over files every time a plugin updates, you can use this extension to inspect the state of your vault symlinks, easily fix broken ones, and even bootstrap brand new vaults by selectively linking components from the origin. Above all else, the extension must prioritize safety—it should always verify paths, gracefully handle missing targets, and never perform destructive operations that could compromise the user's local Obsidian data.
 
 ---
 

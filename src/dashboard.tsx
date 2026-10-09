@@ -1118,7 +1118,7 @@ export function VaultList({ defaultVault, explanation }: { defaultVault: string;
 }
 
 export default function Dashboard() {
-  const { defaultVaultPath } = getPreferenceValues<{ defaultVaultPath?: string }>();
+  const { defaultVaultPath } = getPreferenceValues<Preferences>();
   const { data: validDefaultVault, isLoading: checkingDefaultVault } = usePromise(
     isVaultDirectory,
     [defaultVaultPath ?? ""],

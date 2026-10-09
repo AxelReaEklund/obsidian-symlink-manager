@@ -32,13 +32,11 @@ export async function generateThemePreviewSvg(item: VaultItem): Promise<string |
   let themeCss = "";
   try {
     const cssPath =
-      item.state === "available" || item.state === "native-unique"
-        ? join(item.defaultPath, "theme.css")
-        : join(item.targetPath, "theme.css");
+      item.state === "available" ? join(item.defaultPath, "theme.css") : join(item.targetPath, "theme.css");
     themeCss = await readFile(cssPath, "utf-8");
   } catch {
     try {
-      themeCss = await readFile(join(item.defaultPath, "theme.css"), "utf-8");
+      themeCss = await readFile(join(item.targetPath, "theme.css"), "utf-8");
     } catch {
       return undefined;
     }
@@ -115,7 +113,7 @@ export async function generateThemePreviewSvg(item: VaultItem): Promise<string |
     
     <text x="240" y="100" fill="${textNormal}" font-family="system-ui" font-size="32" font-weight="700">Theme Preview</text>
     
-    <text x="240" y="140" fill="${textNormal}" font-family="system-ui" font-size="16">This is a dynamic mockup of the <tspan fill="${textAccent}" font-weight="bold">${item.name}</tspan> theme.</text>
+    <text x="240" y="140" fill="${textNormal}" font-family="system-ui" font-size="16">This is a dynamic mockup of the <tspan fill="${textAccent}" font-weight="bold">${item.name.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</tspan> theme.</text>
     <text x="240" y="170" fill="${textNormal}" font-family="system-ui" font-size="16">It extracts colors directly from <tspan font-family="monospace" fill="${textMuted}">theme.css</tspan>!</text>
     
     <rect x="240" y="210" width="130" height="34" rx="6" fill="${interactiveAccent}" />

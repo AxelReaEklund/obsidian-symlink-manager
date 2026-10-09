@@ -368,8 +368,9 @@ async function knownVaults(): Promise<string[]> {
 
 export default function LatexHub({ initialTargetVault }: { initialTargetVault?: string }) {
   const { defaultVaultPath } = getPreferenceValues<Preferences>();
-  // @ts-expect-error - latexSnippetsFolder is an unreleased preference
-  const latexSnippetsFolder: string | undefined = (getPreferenceValues<Preferences>() as any).latexSnippetsFolder;
+  const latexSnippetsFolder: string | undefined = (
+    getPreferenceValues<Preferences>() as unknown as { latexSnippetsFolder?: string }
+  ).latexSnippetsFolder;
   const folder = latexSnippetsFolder ? path.resolve(latexSnippetsFolder) : "";
   const [files, setFiles] = useState<SnippetFile[]>([]);
   const [legacy, setLegacy] = useState<SnippetFile>();

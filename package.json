@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "obsidian-symlink-manager",
   "title": "Obsidian Symlink Manager",
-  "description": "Effortlessly manage, inspect, and sync symlinked Obsidian plugins, CSS snippets, and themes across multiple vaults.\n\n⚬ Inspect & Modify: View existing symlink targets, update paths, and create or remove links on the fly.\n⚬ Vault Bootstrapping: Generate new vaults with a guided setup to choose exactly which components to symlink.\n⚬ Global Origin Vault: Define a primary source vault where your shared, \"source-of-truth\" configurations live.\n⚬ Broken Link Detection: Automatically highlight and repair \"dead\" symlinks when source files are deleted or moved.\n⚬ Sync Profiles / Presets: Allow one-click symlink sets (e.g., a minimal \"Work Vault\" profile vs. a fully loaded \"Personal\" profile).\n⚬ Hot-Reload / Restart Reminder: A built-in prompt or command to reload Obsidian without saving/reopening after symlink changes.",
+  "description": "Sync and manage Obsidian plugins, themes, snippets, and settings across multiple vaults using symlinks.",
   "icon": "extension-icon.png",
   "author": "axel_eklund",
   "platforms": [
@@ -12,7 +12,35 @@
     "Productivity"
   ],
   "license": "MIT",
-  "commands": [],
+  "commands": [
+    {
+      "name": "dashboard",
+      "title": "Manage Vault Symlinks",
+      "description": "Inspect and sync vault configurations",
+      "mode": "view"
+    },
+    {
+      "name": "bootstrap",
+      "title": "Bootstrap New Vault",
+      "description": "Create a vault with selected links",
+      "mode": "view"
+    },
+    {
+      "name": "profiles",
+      "title": "Manage Sync Profiles",
+      "description": "Create and apply sync profiles",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "defaultVaultPath",
+      "title": "Default Vault Path",
+      "description": "The source-of-truth Obsidian vault",
+      "type": "directory",
+      "required": true
+    }
+  ],
   "tools": [],
   "dependencies": {
     "@raycast/api": "^1.104.20",

@@ -541,10 +541,24 @@ function ItemActions({
           {quickActions}
         </ActionPanel.Submenu>
         <Action.ShowInFinder
-          title={`Open ${folderTitle} Folder in Finder`}
-          path={join(item.targetVault, ".obsidian", ...(item.category === "settings" ? [] : [item.category]))}
+          title={
+            item.category === "plugins" || item.category === "themes"
+              ? `Open ${item.name} in Finder`
+              : `Show ${item.name} in Finder`
+          }
+          path={item.state === "available" ? item.defaultPath : item.targetPath}
           shortcut={{ modifiers: ["cmd", "shift"], key: "f" }}
         />
+        <Action.ShowInFinder
+          title={`Open ${folderTitle} Folder in Finder`}
+          path={join(item.targetVault, ".obsidian", ...(item.category === "settings" ? [] : [item.category]))}
+        />
+        {item.state !== "available" && (
+          <Action.ShowInFinder
+            title={`Show in Default Vault (${basename(item.defaultVault)})`}
+            path={item.defaultPath}
+          />
+        )}
       </ActionPanel.Section>
       <ActionPanel.Section title="Quick Actions">{quickActions}</ActionPanel.Section>
       <ActionPanel.Section title="Navigation">
@@ -878,6 +892,11 @@ function CategoryItemList({
                   defaultVault={defaultVault}
                   targetVault={targetVault}
                   onChanged={() => void refreshItems()}
+                />
+                <Action.ShowInFinder
+                  title="Open CSS Snippets Folder in Finder"
+                  path={join(targetVault, ".obsidian", "snippets")}
+                  shortcut={{ modifiers: ["cmd", "shift"], key: "f" }}
                 />
                 <Action title="Back to Overview" onAction={pop} />
               </ActionPanel>

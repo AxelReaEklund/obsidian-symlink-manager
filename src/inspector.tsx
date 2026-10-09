@@ -491,6 +491,25 @@ export default function ItemInspector({
           icon={Icon.Eye}
           target={<Detail navigationTitle={"Inspect · " + item.name} markdown={markdown} />}
         />
+        <Action.ShowInFinder
+          title={
+            item.category === "plugins" || item.category === "themes"
+              ? `Open ${item.name} in Finder`
+              : `Show ${item.name} in Finder`
+          }
+          path={item.state === "available" ? item.defaultPath : item.targetPath}
+          shortcut={{ modifiers: ["cmd", "shift"], key: "f" }}
+        />
+        <Action.ShowInFinder
+          title={`Open ${item.category === "settings" ? "Settings" : item.category === "snippets" ? "CSS Snippets" : item.category === "themes" ? "Themes" : "Plugins"} Folder in Finder`}
+          path={join(item.targetVault, ".obsidian", ...(item.category === "settings" ? [] : [item.category]))}
+        />
+        {item.state !== "available" && (
+          <Action.ShowInFinder
+            title={`Show in Default Vault (${basename(item.defaultVault)})`}
+            path={item.defaultPath}
+          />
+        )}
       </ActionPanel.Section>
       {selectedId === "overview" && item.state === "native-branched" && (
         <ActionPanel.Section title="Compare and Sync">

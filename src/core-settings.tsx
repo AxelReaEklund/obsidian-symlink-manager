@@ -99,6 +99,11 @@ function ActivationOverview({ group, targetVault }: { group: ActivationGroup; ta
             icon={Icon.List}
             onAction={() => push(<ActivationIds group={group} targetVault={targetVault} />)}
           />
+          <Action.ShowInFinder
+            title={`Show ${group.file} in Finder`}
+            path={path.join(targetVault, ".obsidian", group.file)}
+            shortcut={{ modifiers: ["cmd", "shift"], key: "f" }}
+          />
         </ActionPanel>
       }
     />
@@ -301,6 +306,11 @@ function SettingsGroup({
                         onAction={() => void apply(choice, "target")}
                       />
                     )}
+                    <Action.ShowInFinder
+                      title={`Show ${file} in Finder`}
+                      path={path.join(targetVault, ".obsidian", file)}
+                      shortcut={{ modifiers: ["cmd", "shift"], key: "f" }}
+                    />
                   </ActionPanel>
                 }
               />
@@ -533,6 +543,11 @@ export default function CoreSettings({
                             />,
                           )
                         }
+                      />
+                      <Action.ShowInFinder
+                        title={`Show ${name} in Finder`}
+                        path={path.join(targetVault, ".obsidian", name)}
+                        shortcut={{ modifiers: ["cmd", "shift"], key: "f" }}
                       />
                       {linked && isLinkableSettingsGroup(name) && item && (
                         <Action

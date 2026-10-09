@@ -40,6 +40,7 @@ const SETTINGS = [
 ] as const;
 const CATEGORIES: ItemCategory[] = ["plugins", "themes", "snippets", "settings"];
 const STAGING_PREFIX = ".obsidian-symlink-manager-";
+const IGNORED_NAMES = new Set([".DS_Store", ".localized", "node_modules", ".git"]);
 
 type Existing = Awaited<ReturnType<typeof fs.lstat>>;
 type Location = { defaultVault: string; targetVault: string; defaultPath: string; targetPath: string };
@@ -126,9 +127,9 @@ async function sameContents(left: string, right: string): Promise<boolean> {
     return (await hashFile(left)) === (await hashFile(right));
   }
   if (!a.isDirectory() || !b.isDirectory()) return false;
-  const [leftNames, rightNames] = await Promise.all([fs.readdir(left), fs.readdir(right)]);
-  leftNames.sort();
-  rightNames.sort();
+  const [leftRaw, rightRaw] = await Promise.all([fs.readdir(left), fs.readdir(right)]);
+  const leftNames = leftRaw.filter((n) => !IGNORED_NAMES.has(n)).sort();
+  const rightNames = rightRaw.filter((n) => !IGNORED_NAMES.has(n)).sort();
   if (leftNames.length !== rightNames.length || leftNames.some((name, index) => name !== rightNames[index]))
     return false;
   for (const name of leftNames) {
@@ -234,7 +235,11 @@ async function assertNoNestedLinks(filePath: string): Promise<void> {
   const stat = await fs.lstat(filePath);
   if (stat.isSymbolicLink()) throw new Error(`Nested symlinks cannot be copied safely: ${filePath}`);
   if (stat.isDirectory()) {
-    for (const name of await fs.readdir(filePath)) await assertNoNestedLinks(path.join(filePath, name));
+    for (const name of await fs.readdir(filePath)) {
+      if (!IGNORED_NAMES.has(name)) {
+        await assertNoNestedLinks(path.join(filePath, name));
+      }
+    }
   } else if (!stat.isFile()) {
     throw new Error(`Unsupported file type: ${filePath}`);
   }
@@ -277,6 +282,7 @@ async function stageCopy(source: string, destination: string): Promise<void> {
       errorOnExist: true,
       force: false,
       dereference: false,
+      filter: (src) => !IGNORED_NAMES.has(path.basename(src)),
     });
   } catch (error) {
     await removeStaging(destination);

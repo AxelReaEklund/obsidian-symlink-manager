@@ -30,6 +30,12 @@
       "title": "Manage Sync Profiles",
       "description": "Create and apply sync profiles",
       "mode": "view"
+    },
+    {
+      "name": "help",
+      "title": "Help & Guide",
+      "description": "Learn how to use Obsidian Symlink Manager and understand its terminology.",
+      "mode": "view"
     }
   ],
   "preferences": [
